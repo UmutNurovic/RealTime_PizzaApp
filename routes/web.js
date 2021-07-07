@@ -2,7 +2,9 @@ const homeController = require('../app/http/controllers/homeController');
 const authController = require('../app/http/controllers/authController');
 const cartController = require('../app/http/controllers/customers/cartController');
 const orderContorller = require('../app/http/controllers/customers/orderController');
-const AdminOrderContorller = require('../app/http/controllers/admin/orderControllers');
+const AdminOrderContorller = require('../app/http/controllers/admin/orderController');
+const StatusContorller = require('../app/http/controllers/admin/statusController');
+
 const guest = require('../app/http/middleware/guest');
 const auth = require('../app/http/middleware/auth');
 const admin = require('../app/http/middleware/admin');
@@ -27,9 +29,14 @@ function initRouts(app) {
     //Customer routes
     app.post('/orders',auth,orderContorller().store)
     app.get('/customers/orders',auth,orderContorller().index)
+    app.get('/customer/orders/:id',auth,orderContorller().show)
 
     // Admin routes
     app.get('/admin/orders',admin,AdminOrderContorller().index)
+
+    app.post('/admin/order/status',admin,StatusContorller().update)
+
+
 }
 
 module.exports = {
